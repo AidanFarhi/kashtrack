@@ -13,14 +13,15 @@ func main() {
 
 	db, _ := sql.Open("sqlite3", "db/expense.db")
 
-	tmpl := template.Must(template.ParseGlob("web/templates/*.html"))
+	t := template.Must(template.ParseGlob("web/templates/*.html"))
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", handler.IndexHandler(db, tmpl))
+	m := http.NewServeMux()
+	m.HandleFunc("/", handler.IndexHandler(db, t))
+	m.HandleFunc("POST /add_expense", handler.AddExpenseHandler(db, t))
 
 	server := http.Server{
 		Addr:    ":8080",
-		Handler: mux,
+		Handler: m,
 	}
 
 	server.ListenAndServe()

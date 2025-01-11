@@ -19,9 +19,9 @@ func GetExpenses(db *sql.DB) ([]model.Expense, error) {
 }
 
 func AddExpense(db *sql.DB, r *http.Request) error {
-	db.Exec(`
-		INSERT INTO expense (user_id, category, amount)
-		VALUES (1, ?, ?)
-	`, r.Form.Get("category"), r.Form.Get("amount"))
+	db.Exec(
+		"INSERT INTO expense (user_id, category, amount) VALUES (1, ?, ?)",
+		r.FormValue("category"), r.FormValue("amount"),
+	)
 	return nil
 }
