@@ -12,7 +12,7 @@
     <title>KashTrack</title> 
 </head>
 <body>
-    {{ template "header" }}
-    <p>hello</p>
+    {{ template "header" . }}
+    {{ template "expense_list" .Expenses }}
 </html>
 {{ end }}

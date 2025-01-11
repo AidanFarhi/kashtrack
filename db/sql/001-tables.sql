@@ -11,6 +11,7 @@ CREATE TABLE user (
 CREATE TABLE expense (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
+    timestamp TEXT DEFAULT (DATETIME('now')),
     amount DOUBLE,
     category TEXT,
     FOREIGN KEY (user_id) REFERENCES user(id)

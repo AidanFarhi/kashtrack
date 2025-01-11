@@ -1,0 +1,22 @@
+{{ block "expense_list" . }}
+<table id="event-table">
+    <thead>
+        <tr>
+            <th>date</th>
+            <th>category</th>
+            <th>amount</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range . }}
+            <tr>
+                <td>{{ .TimeStamp }}</td>
+                <td>{{ .Category }}</td>
+                <td>${{ .Amount }}</td>
+                </td>
+            </tr>
+        {{ end }}
+    </tbody>
+</table>
+{{ end }}

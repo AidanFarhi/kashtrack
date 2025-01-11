@@ -1,12 +1,17 @@
 package handler
 
 import (
+	"database/sql"
 	"html/template"
+	"kashtrack/model"
+	"kashtrack/service"
 	"net/http"
 )
 
-func IndexHandler(t *template.Template) http.HandlerFunc {
+func IndexHandler(db *sql.DB, t *template.Template) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		t.ExecuteTemplate(w, "index", nil)
+		pd := model.PageData{}
+		pd.Expenses, _ = service.GetExpenses(db)
+		t.ExecuteTemplate(w, "index", pd)
 	}
 }
