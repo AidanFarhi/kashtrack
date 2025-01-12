@@ -1,24 +1,24 @@
 {{ block "expense_form" . }}
-    <form
-        hx-target="#event-table"
-        hx-swap="outerHTML"
-        hx-post="/add_expense"
-    >
-        <div>
-            <label for="category">Category</label>
-            <select id="category" name="category" required>
-                <option value="" disabled selected>pick a category...</option>
-                <option value="food">food</option>
-                <option value="gas">gas</option>
-                <option value="pets">pets</option>
-                <option value="rent">rent</option>
-                <option value="car">car</option>
-            </select>
-        </div>
-        <div>
-            <label for="amount">Amount</label>
-            <input type="number" name="amount" placeholder="enter amount..." required>
-        </div>
-        <button type="submit">Add Expense</button>
-    </form>
+<form
+    hx-target="#event-table"
+    hx-swap="outerHTML"
+    hx-post="/add_expense"
+>
+    <div>
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+            <option value="" disabled selected>pick a category...</option>
+            <option value="food">food</option>
+            <option value="gas">gas</option>
+            <option value="pets">pets</option>
+            <option value="rent">rent</option>
+            <option value="car">car</option>
+        </select>
+    </div>
+    <div>
+        <label for="amount">Amount</label>
+        <input type="number" name="amount" placeholder="enter amount..." required>
+    </div>
+    <button type="submit">Add Expense</button>
+</form>
 {{ end }}

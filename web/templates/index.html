@@ -5,15 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/htmx.org@2.0.3"></script>
-    <!-- <link rel="stylesheet" href="web/css/index.css">
-    <link rel="stylesheet" href="web/css/event_table.css">
+    <link rel="stylesheet" href="web/css/index.css">
     <link rel="stylesheet" href="web/css/header.css">
-    <link rel="stylesheet" href="web/css/login_form.css"> -->
+    <link rel="stylesheet" href="web/css/summary.css">
     <title>KashTrack</title> 
 </head>
 <body>
     {{ template "header" . }}
-    {{ template "expense_form" .Expenses }}
-    {{ template "expense_list" .Expenses }}
+    {{ template "summary" . }}
+    <!-- {{ template "expense_list" .Expenses }}
+    {{ template "expense_form" .Expenses }} -->
+</body>
 </html>
 {{ end }}

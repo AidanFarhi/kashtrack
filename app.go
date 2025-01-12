@@ -15,7 +15,10 @@ func main() {
 
 	t := template.Must(template.ParseGlob("web/templates/*.html"))
 
+	fs := http.FileServer(http.Dir("web"))
+
 	m := http.NewServeMux()
+	m.Handle("/web/", http.StripPrefix("/web/", fs))
 	m.HandleFunc("/", handler.IndexHandler(db, t))
 	m.HandleFunc("POST /add_expense", handler.AddExpenseHandler(db, t))
 
