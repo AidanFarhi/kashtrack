@@ -16,3 +16,15 @@ button, input[type="submit"], input[type="reset"] {
 body {
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
 }
+
+#fader {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.25;
+    background-color: black;
+}
+
+#fader.hidden {
+    display: none;
+}

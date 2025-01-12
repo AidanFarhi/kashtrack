@@ -1,5 +1,7 @@
 {{ block "expense_form" . }}
 <form
+    id="expense-form"
+    class="closed"
     hx-target="#event-table"
     hx-swap="outerHTML"
     hx-post="/add_expense"

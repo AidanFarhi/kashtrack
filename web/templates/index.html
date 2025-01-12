@@ -8,13 +8,15 @@
     <link rel="stylesheet" href="web/css/index.css">
     <link rel="stylesheet" href="web/css/header.css">
     <link rel="stylesheet" href="web/css/summary.css">
+    <link rel="stylesheet" href="web/css/expense_form.css">
     <title>KashTrack</title> 
 </head>
 <body>
+    <div class="hidden" id="fader"></div>
     {{ template "header" . }}
     {{ template "summary" . }}
-    <!-- {{ template "expense_list" .Expenses }}
-    {{ template "expense_form" .Expenses }} -->
+    {{ template "expense_form" . }}
+    <script src="web/js/index.js"></script>
 </body>
 </html>
 {{ end }}

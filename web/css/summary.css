@@ -1,5 +1,5 @@
 #summary-container {
-    height: 20vh;
+    height: 18vh;
     margin-left: 3vw;
     margin-right: 3vw;
     display: flex;
@@ -9,8 +9,10 @@
 }
 
 #month-expenses {
-    /* width: 100%;
-    height: 100%; */
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 10px;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -27,4 +29,12 @@
 
 #expense-summary-text {
     opacity: 0.75;
+}
+
+#add-expense-btn {
+    color: rgba(34, 34, 34, 0.878);
+}
+
+#add-expense-btn:hover {
+    color: rgba(34, 34, 34);
 }
