@@ -1,11 +1,5 @@
 {{ block "expense_form" . }}
-<form
-    id="expense-form"
-    class="closed"
-    hx-target="#event-table"
-    hx-swap="outerHTML"
-    hx-post="/add_expense"
->
+<form id="expense-form" class="closed" hx-post="/add_expense">
     <div class="form-group">
         <label for="category">Category</label>
         <select id="category" name="category" required>
