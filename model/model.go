@@ -7,5 +7,6 @@ type Expense struct {
 }
 
 type PageData struct {
-	Expenses []Expense
+	Expenses        []Expense
+	CurrentMonthSum float64
 }

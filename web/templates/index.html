@@ -14,7 +14,8 @@
 <body>
     <div class="hidden" id="fader"></div>
     {{ template "header" . }}
-    {{ template "summary" . }}
+    {{ template "summary" .CurrentMonthSum }}
+    {{ template "expense_list" .Expenses }}
     {{ template "expense_form" . }}
     <script src="web/js/index.js"></script>
 </body>

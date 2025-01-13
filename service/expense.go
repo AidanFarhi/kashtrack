@@ -18,6 +18,16 @@ func GetExpenses(db *sql.DB) ([]model.Expense, error) {
 	return expenses, nil
 }
 
+func GetCurrentMonthSum(db *sql.DB) (float64, error) {
+	var currentMonthSum float64
+	row := db.QueryRow(`
+		SELECT SUM(amount) FROM expense
+		WHERE SUBSTRING(timestamp, 1, 7) = STRFTIME('%Y-%m', DATE('now'))
+	`)
+	row.Scan(&currentMonthSum)
+	return currentMonthSum, nil
+}
+
 func AddExpense(db *sql.DB, r *http.Request) error {
 	db.Exec(
 		"INSERT INTO expense (user_id, category, amount) VALUES (1, ?, ?)",
