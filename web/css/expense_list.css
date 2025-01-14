@@ -1,0 +1,26 @@
+#event-table {
+    margin: 0 auto;
+    width: calc(100vw - 6vw);
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    text-align: left;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+th {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+tbody {
+    overflow-y: auto;
+}
+
+td {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
