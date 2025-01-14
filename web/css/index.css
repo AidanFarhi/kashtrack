@@ -20,7 +20,7 @@ body {
 table {
     border-collapse: collapse; /* Removes default spacing between cells */
     border-spacing: 0;         /* Ensures no spacing */
-    width: 100%;               /* Optional: Makes the table fill its container */
+    width: 95vw;               /* Optional: Makes the table fill its container */
     margin: 0;
     padding: 0;
   }

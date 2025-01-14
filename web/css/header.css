@@ -8,4 +8,10 @@ header {
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    background-color: white;
+}
+
+header svg {
+    position: absolute;
+    left: 3vw;
 }
