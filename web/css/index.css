@@ -14,22 +14,24 @@ button, input[type="submit"], input[type="reset"] {
 }
 
 body {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 5vh 20vh 1fr;
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
 }
 
 table {
     border-collapse: collapse; /* Removes default spacing between cells */
     border-spacing: 0;         /* Ensures no spacing */
-    width: 95vw;               /* Optional: Makes the table fill its container */
     margin: 0;
     padding: 0;
   }
   
-  th, td {
-    padding: 0;
-    border: none;
-    text-align: left; /* Default alignment */
-  }
+th, td {
+padding: 0;
+border: none;
+text-align: left; /* Default alignment */
+}
 
 #fader {
     z-index: 3;

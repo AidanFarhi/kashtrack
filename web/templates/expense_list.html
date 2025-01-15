@@ -1,22 +1,24 @@
 {{ block "expense_list" . }}
-<table id="event-table">
-    <thead>
-        <tr id="header-row">
-            <th>Date</th>
-            <th>Category</th>
-            <th>Amount</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        {{ range . }}
-            <tr>
-                <td>{{ .TimeStamp }}</td>
-                <td>{{ .Category }}</td>
-                <td>${{ .Amount }}</td>
-                </td>
+<div id="expense-table-container">
+    <table id="expense-table">
+        <thead>
+            <tr id="header-row">
+                <th>Date</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th></th>
             </tr>
-        {{ end }}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {{ range . }}
+                <tr>
+                    <td>{{ .TimeStamp }}</td>
+                    <td>{{ .Category }}</td>
+                    <td>${{ .Amount }}</td>
+                    </td>
+                </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</div>
 {{ end }}
