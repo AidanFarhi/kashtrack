@@ -21,6 +21,7 @@ func main() {
 	m.Handle("/web/", http.StripPrefix("/web/", fs))
 	m.HandleFunc("/", handler.IndexHandler(db, t))
 	m.HandleFunc("POST /add_expense", handler.AddExpenseHandler(db, t))
+	m.HandleFunc("POST /login", handler.LoginHandler(db, t))
 
 	server := http.Server{
 		Addr:    ":8080",

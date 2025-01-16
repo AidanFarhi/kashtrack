@@ -7,6 +7,7 @@ type Expense struct {
 }
 
 type PageData struct {
+	LoggedIn        bool
 	Expenses        []Expense
 	CurrentMonthSum float64
 }

@@ -10,15 +10,20 @@
     <link rel="stylesheet" href="web/css/summary.css">
     <link rel="stylesheet" href="web/css/expense_form.css">
     <link rel="stylesheet" href="web/css/expense_list.css">
+    <link rel="stylesheet" href="web/css/login_form.css">
     <title>KashTrack</title> 
 </head>
 <body>
-    <div class="hidden" id="fader"></div>
     {{ template "header" . }}
-    {{ template "summary" .CurrentMonthSum }}
-    {{ template "expense_list" .Expenses }}
-    {{ template "expense_form" . }}
-    <script src="web/js/index.js"></script>
+    {{ if .LoggedIn }}
+        <div class="hidden" id="fader"></div>
+        {{ template "summary" .CurrentMonthSum }}
+        {{ template "expense_list" .Expenses }}
+        {{ template "expense_form" . }}
+        <script src="web/js/index.js"></script>
+    {{ else }}
+        {{ template "login_form" . }}
+    {{ end }}
 </body>
 </html>
 {{ end }}
