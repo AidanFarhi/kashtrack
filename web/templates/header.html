@@ -1,10 +1,39 @@
 {{ block "header" . }}
 <header id="header">
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg 
+        id="logo" 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="32" 
+        height="32" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="#007bff" 
+        stroke-width="1" 
+        stroke-linecap="round" 
+        stroke-linejoin="round">
         <circle cx="12" cy="12" r="10"></circle>
         <path d="M12 6v12"></path>
         <path d="M9 9h6a3 3 0 0 1 0 6h-6"></path>
     </svg>
-    <p>KashTrack</p>
+    <p id="site-name">KashTrack</p>
+    {{ if .LoggedIn }}
+    <svg 
+        id="logout" 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="32" height="32" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="#007bff" 
+        stroke-width="1" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        hx-post="/logout"
+        hx-swap="none"
+        >
+        <path d="M10 5H4C3.44772 5 3 5.44772 3 6V18C3 18.5523 3.44772 19 4 19H10" />
+        <path d="M14 8L19 12L14 16" />
+        <path d="M19 12H9" />
+    </svg>
+    {{ end }}
 </header>
 {{ end }}

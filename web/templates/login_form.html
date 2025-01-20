@@ -1,5 +1,5 @@
 {{ block "login_form" . }}
-<form id="login-form" hx-post="/login">
+<form id="login-form" hx-post="/login" hx-swap="none">
     <div class="form-group">
         <label for="username">Username</label>
         <input type="text" name="username" placeholder="Enter username..."required>

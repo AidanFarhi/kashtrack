@@ -33,18 +33,18 @@ func createNewSession(db *sql.DB, userId int) string {
 	return token
 }
 
-func ValidateSession(db *sql.DB, r *http.Request) error {
+func ValidateSession(db *sql.DB, r *http.Request) (int, error) {
 	var userID int
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
-		return err
+		return 0, err
 	}
 	token := cookie.Value
 	err = db.QueryRow("SELECT user_id FROM session WHERE token = ?", token).Scan(&userID)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return userID, err
 }
 
 func Login(db *sql.DB, r *http.Request) (string, error) {
@@ -54,4 +54,8 @@ func Login(db *sql.DB, r *http.Request) (string, error) {
 	}
 	sessionToken := createNewSession(db, userId)
 	return sessionToken, nil
+}
+
+func Logout(db *sql.DB, userId int) {
+	db.Exec(`DELETE FROM session WHERE user_id = ?`, userId)
 }

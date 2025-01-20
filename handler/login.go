@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"kashtrack/service"
 	"net/http"
+	"time"
 )
 
 func LoginHandler(db *sql.DB, t *template.Template) http.HandlerFunc {
@@ -15,10 +16,27 @@ func LoginHandler(db *sql.DB, t *template.Template) http.HandlerFunc {
 			return
 		}
 		cookie := http.Cookie{
-			Name:  "session_token",
-			Value: sessionToken,
+			Name:     "session_token",
+			Value:    sessionToken,
+			HttpOnly: true,
 		}
 		http.SetCookie(w, &cookie)
+		w.Header().Add("HX-Redirect", "/")
+	}
+}
+
+func LogoutHandler(db *sql.DB, t *template.Template) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userId, _ := service.ValidateSession(db, r)
+		service.Logout(db, userId)
+		http.SetCookie(w, &http.Cookie{
+			Name:     "session_token",
+			Value:    "",
+			Path:     "/",
+			Expires:  time.Unix(0, 0),
+			MaxAge:   -1,
+			HttpOnly: true,
+		})
 		w.Header().Add("HX-Redirect", "/")
 	}
 }

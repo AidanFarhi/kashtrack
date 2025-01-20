@@ -12,7 +12,7 @@ func IndexHandler(db *sql.DB, t *template.Template) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		pd := model.PageData{}
 		pd.LoggedIn = true
-		err := service.ValidateSession(db, r)
+		_, err := service.ValidateSession(db, r)
 		if err != nil {
 			pd.LoggedIn = false
 		}
