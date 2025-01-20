@@ -12,8 +12,8 @@ func IndexHandler(db *sql.DB, t *template.Template) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		pd := model.PageData{}
 		pd.LoggedIn = true
-		cookie, err := r.Cookie("session_token")
-		if err != nil || cookie.Value != "sagetoken" {
+		err := service.ValidateSession(db, r)
+		if err != nil {
 			pd.LoggedIn = false
 		}
 		pd.Expenses, _ = service.GetExpenses(db)
