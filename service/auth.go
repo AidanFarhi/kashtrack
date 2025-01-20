@@ -34,7 +34,7 @@ func createNewSession(db *sql.DB, userId int) string {
 }
 
 func ValidateSession(db *sql.DB, r *http.Request) error {
-	var userID string
+	var userID int
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
 		return err
