@@ -1,0 +1,3 @@
+- [ ] fetch userId when making calls via session token
+- [ ] pie chart by category
+- [ ] see previous months
