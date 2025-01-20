@@ -21,8 +21,8 @@ body {
 }
 
 table {
-    border-collapse: collapse; /* Removes default spacing between cells */
-    border-spacing: 0;         /* Ensures no spacing */
+    border-collapse: collapse;
+    border-spacing: 0;
     margin: 0;
     padding: 0;
   }
@@ -30,7 +30,7 @@ table {
 th, td {
 padding: 0;
 border: none;
-text-align: left; /* Default alignment */
+text-align: left;
 }
 
 #fader {

@@ -15,9 +15,9 @@ header {
 
 #site-name {
     color: #007bff;
-    font-family: Arial, sans-serif; /* Optional: Match font styles */
-    font-size: 16px; /* Optional: Adjust to match design */
-    margin: 0; /* Optional: Align visually with SVGs */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    margin: 0;
 }
 
 #logout {
