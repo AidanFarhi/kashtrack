@@ -16,7 +16,8 @@ button, input[type="submit"], input[type="reset"] {
 body {
     height: 100vh;
     display: grid;
-    grid-template-rows: 5vh 20vh 1fr;
+    grid-template-rows: 5vh 25vh 1fr;
+    grid-template-columns: 7.5vw 1fr 2fr 7.5vw;
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
 }
 
