@@ -33,8 +33,11 @@ async function fetchChartData() {
 }
 
 function getRandomColor() {
-    const gray = Math.floor(Math.random() * 256)
-    return `rgb(${gray}, ${gray}, ${gray})`
+    const r = Math.floor(Math.random() * 50)
+    const g = Math.floor(Math.random() * 50)
+    const b = Math.floor(Math.random() * 256)
+    const opacity = 0.75
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`
 }
 
 fetchChartData()
