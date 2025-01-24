@@ -33,10 +33,8 @@ async function fetchChartData() {
 }
 
 function getRandomColor() {
-    const r = Math.floor(Math.random() * 50)
-    const g = Math.floor(Math.random() * 50)
-    const b = Math.floor(Math.random() * 256)
-    return `rgb(${r}, ${g}, ${b})`
+    const gray = Math.floor(Math.random() * 256)
+    return `rgb(${gray}, ${gray}, ${gray})`
 }
 
 fetchChartData()

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="web/css/expense_list.css">
     <link rel="stylesheet" href="web/css/login_form.css">
     <link rel="stylesheet" href="web/css/graph_section.css">
+    <link rel="stylesheet" href="web/css/add_button.css">
     <title>KashTrack</title> 
 </head>
 <body>
@@ -23,6 +24,7 @@
         {{ template "graph_section" . }}
         {{ template "expense_list" .Expenses }}
         {{ template "expense_form" . }}
+        {{ template "add_button" . }}
         <script src="web/js/index.js"></script>
         <script src="web/js/pie_chart.js"></script>
     {{ else }}

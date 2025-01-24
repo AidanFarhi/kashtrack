@@ -1,0 +1,21 @@
+#add-button-container {
+    grid-row: 2/3;
+    grid-column: 4/5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#add-expense-btn {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    background-color: #007bffd1;
+    color: white;
+    border-radius: 5px;
+}
+
+#add-expense-btn:hover {
+    opacity: 0.85;
+}

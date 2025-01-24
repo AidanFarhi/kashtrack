@@ -3,8 +3,6 @@
     grid-column: 2/3;
     display: flex;
     flex-direction: column;
-    /* align-items: center;
-    justify-content: center; */
     align-items: flex-start;
     justify-content: center;
     background-color: white;
@@ -16,24 +14,16 @@
     flex-direction: column;
     align-items: center;
     justify-items: center;
-    /* color: rgba(255, 255, 255, 0.925);
-    background: linear-gradient(125deg, #00f, #40b7e7); */
 }
 
 #expense-amount {
-    font-size: 2.5rem;
+    color: #007bffd1;
+    font-size: 2rem;
     font-weight: 200;
     padding-bottom: 0.5rem;
 }
 
 #expense-summary-text {
+    font-size: 0.75rem;
     opacity: 0.75;
-}
-
-#add-expense-btn {
-    color: rgba(34, 34, 34, 0.878);
-}
-
-#add-expense-btn:hover {
-    color: rgba(34, 34, 34);
 }

@@ -1,6 +1,6 @@
 #expense-table-container {
     grid-row: 3/4;
-    grid-column: 2/4;
+    grid-column: 2/5;
     background-color: white;
     max-height: 100%;
     overflow: hidden;
