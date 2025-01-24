@@ -1,27 +1,42 @@
-const ctx = document.getElementById('pie-chart')
+const ctx = document.getElementById('pie-chart').getContext('2d')
 
-const data = {
-    labels: [
-        'Red',
-        'Blue',
-        'Yellow'
-    ],
-    datasets: [
-        {
-            data: [300, 50, 100],
-            backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
-            ],
-            hoverOffset: 4
+async function fetchChartData() {
+    try {
+        const response = await fetch("/expense_distribution")
+        const jsonData = await response.json()
+        const labels = jsonData.map(item => item.category)
+        const data = jsonData.map(item => item.amount)
+        const backgroundColors = labels.map(() => getRandomColor())
+        const chartData = {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: backgroundColors,
+                hoverOffset: 4
+            }]
         }
-    ]
+        const config = {
+            type: 'pie',
+            data: chartData,
+            options: {
+                plugins: {
+                    legend: {
+                        position: 'left'
+                    }
+                }
+            }
+        }
+        new Chart(ctx, config)
+    } catch (error) {
+        console.error("Error fetching or processing data:", error)
+    }
 }
 
-const config = {
-    type: 'pie',
-    data: data,
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 50)
+    const g = Math.floor(Math.random() * 50)
+    const b = Math.floor(Math.random() * 256)
+    return `rgb(${r}, ${g}, ${b})`
 }
 
-new Chart(ctx, config)
+fetchChartData()

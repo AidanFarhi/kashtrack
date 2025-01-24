@@ -39,11 +39,10 @@ func AddExpense(db *sql.DB, r *http.Request) error {
 func GetExpenseDistribution(db *sql.DB) []model.ExpenseJSON {
 	expenses := []model.ExpenseJSON{}
 	rows, _ := db.Query(`
-		SELECT category, SUM(amount) AS amount
+		SELECT category, ROUND(SUM(amount), 2)
 		FROM expense
 		WHERE SUBSTRING(timestamp, 1, 7) = STRFTIME('%Y-%m', DATE('now'))
 		GROUP BY category
-		ORDER BY total DESC
 	`)
 	for rows.Next() {
 		e := model.ExpenseJSON{}

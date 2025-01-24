@@ -1,5 +1,5 @@
 const fader = document.getElementById('fader')
-const addExpenseButton = document.getElementById('add-expense-btn')
+// const addExpenseButton = document.getElementById('add-expense-btn')
 const expenseForm = document.getElementById('expense-form')
 
 const toggleExpenseForm = () => {
@@ -8,4 +8,4 @@ const toggleExpenseForm = () => {
 }
 
 fader.addEventListener('click', toggleExpenseForm)
-addExpenseButton.addEventListener('click', toggleExpenseForm)
+// addExpenseButton.addEventListener('click', toggleExpenseForm)
