@@ -1,3 +1,0 @@
-- [ ] fetch userId when making calls via session token
-- [ ] see previous months
-- [ ] make call to get pie chart data using session token
