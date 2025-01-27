@@ -33,7 +33,7 @@ func createNewSession(db *sql.DB, userId int) string {
 	return token
 }
 
-func ValidateSession(db *sql.DB, r *http.Request) (int, error) {
+func GetUserIDFromSessionToken(db *sql.DB, r *http.Request) (int, error) {
 	var userID int
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
@@ -44,7 +44,7 @@ func ValidateSession(db *sql.DB, r *http.Request) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return userID, err
+	return userID, nil
 }
 
 func Login(db *sql.DB, r *http.Request) (string, error) {

@@ -12,12 +12,14 @@ func IndexHandler(db *sql.DB, t *template.Template) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		pd := model.PageData{}
 		pd.LoggedIn = true
-		_, err := service.ValidateSession(db, r)
+		userID, err := service.GetUserIDFromSessionToken(db, r)
 		if err != nil {
 			pd.LoggedIn = false
 		}
-		pd.Expenses, _ = service.GetExpenses(db)
-		pd.CurrentMonthSum, _ = service.GetCurrentMonthSum(db)
+		if pd.LoggedIn {
+			pd.Expenses, _ = service.GetExpenses(db, userID)
+			pd.CurrentMonthSum, _ = service.GetCurrentMonthSum(db, userID)
+		}
 		t.ExecuteTemplate(w, "index", pd)
 	}
 }
