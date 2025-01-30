@@ -8,17 +8,21 @@ import (
 	"net/http"
 	"os"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 func main() {
 
-	env := os.Getenv("KASHTRACK_APP_LOGS")
+	logFile := os.Args[1]
+	logger.InitLogger(logFile)
 
-	logger.InitLogger(env)
+	db, err := sql.Open("sqlite", "db/expense.db")
+	if err != nil {
+		logger.Logger.Fatal(err)
+	}
 
-	db, _ := sql.Open("sqlite3", "db/expense.db")
 	t := template.Must(template.ParseGlob("web/templates/*.html"))
+
 	fs := http.FileServer(http.Dir("web"))
 
 	m := http.NewServeMux()
