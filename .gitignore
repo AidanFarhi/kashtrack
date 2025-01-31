@@ -2,4 +2,4 @@ db/expense.db
 tmp
 *.pem
 kashtrack
-.env
+init_secrets.sh
