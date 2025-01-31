@@ -8,13 +8,13 @@ import (
 	"net/http"
 	"os"
 
+	_ "github.com/joho/godotenv/autoload"
 	_ "modernc.org/sqlite"
 )
 
 func main() {
 
-	logFile := os.Args[1]
-	logger.InitLogger(logFile)
+	logger.InitLogger(os.Getenv("LOG_FILE"))
 
 	db, err := sql.Open("sqlite", "db/expense.db")
 	if err != nil {
@@ -22,9 +22,7 @@ func main() {
 	}
 
 	t := template.Must(template.ParseGlob("web/templates/*.html"))
-
 	fs := http.FileServer(http.Dir("web"))
-
 	m := http.NewServeMux()
 
 	m.Handle("/web/", http.StripPrefix("/web/", fs))
@@ -35,7 +33,7 @@ func main() {
 	m.HandleFunc("GET /expense_distribution", handler.ExpenseDistributionHandler(db))
 
 	server := http.Server{
-		Addr:    "0.0.0.0:80",
+		Addr:    os.Getenv("ADDRESS"),
 		Handler: m,
 	}
 

@@ -6,7 +6,7 @@ LOG_FILE="app.log"
 BINARY_NAME="kashtrack"
 WEB_DIR="web"
 EC2_USER="ec2-user"
-EC2_HOST="ec2-98-84-140-246.compute-1.amazonaws.com"
+EC2_HOST="ec2-50-17-69-239.compute-1.amazonaws.com"
 GOOS="linux"
 GOARCH="amd64"
 REMOTE_DIR="/home/ec2-user/app"
@@ -22,6 +22,9 @@ ssh -i $SSH_KEY $EC2_USER@$EC2_HOST sudo pkill -f $BINARY_NAME
 
 echo "Creating log file..."
 ssh -i $SSH_KEY $EC2_USER@$EC2_HOST touch $REMOTE_DIR/$LOG_FILE
+
+echo "Copying .env file..."
+scp -i $SSH_KEY .env_prod $EC2_USER@$EC2_HOST:$REMOTE_DIR/.env
 
 echo "Copying binary..."
 scp -i $SSH_KEY $BINARY_NAME $EC2_USER@$EC2_HOST:$REMOTE_DIR/
