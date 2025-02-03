@@ -37,5 +37,8 @@ func main() {
 		Handler: m,
 	}
 
-	server.ListenAndServe()
+	logger.Logger.Println("starting server at address:", os.Getenv("ADDRESS"))
+
+	err = server.ListenAndServe()
+	logger.Logger.Println(err)
 }
