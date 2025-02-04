@@ -58,7 +58,7 @@ deploy: startserver
 	scp -i $(ssh_key) $(binary_name) $(user)@$$host_name:$(remote_dir)/ && \
 	scp -r -i $(ssh_key) $(web_dir) $(user)@$$host_name:$(remote_dir)/ && \
 	echo "starting app" && \
-	ssh -i $(ssh_key) $(user)@$$host_name "cd $(remote_dir) && echo 'sudo -n ./$(binary_name) > /dev/null 2>&1 &' | at now" && \
+	ssh -i $(ssh_key) $(user)@$$host_name "cd $(remote_dir) && echo 'sudo -n ./$(binary_name) > /dev/null 2>&1 &' | at now 2>/dev/null" && \
 	echo "starting cron job" && \
 	ssh -i $(ssh_key) $(user)@$$host_name "(crontab -l 2>/dev/null && echo \"$(cron_cmd)\") | crontab -" && \
 	echo "deployment complete to host: $$host_name"
