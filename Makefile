@@ -13,6 +13,7 @@ log_path := $(remote_dir)/$(log_file)
 cron_cmd := */1 * * * * tail -n 5 $(log_path) > $(remote_dir)/tmp_fl && mv $(remote_dir)/tmp_fl $(log_path)
 
 startserver:
+	@echo "starting server"
 	@. ./init_secrets.sh && \
 	instance_id=$$( \
 		aws ec2 describe-instances \
@@ -25,6 +26,7 @@ startserver:
 	echo "server running"
 
 stopserver:
+	@echo "stopping server"
 	@. ./init_secrets.sh && \
 	instance_id=$$( \
 		aws ec2 describe-instances \
@@ -33,23 +35,30 @@ stopserver:
 			--output text \
 	) && \
 	aws ec2 stop-instances --instance-ids $$instance_id && \
-	aws ec2 wait instance-stopped --instance-ids $$instance_id && \
-	echo "server stopped"
+	aws ec2 wait instance-stopped --instance-ids $$instance_id
+	@echo "server stopped"
 
-deploy:
-	@. ./init_secrets.sh; \
+deploy: startserver
+	@echo "starting deployment"
+	@. ./init_secrets.sh && \
 	host_name=$$( \
 		aws ec2 describe-instances \
 		--filters "Name=tag:Name,Values=$(server_name)" \
 		--query "Reservations[*].Instances[*].PublicDnsName" \
 		--output text \
-	); \
-	GOOS=$(goos) GOARCH=$(goarch) go build -o $(binary_name) $(go_file); \
-	ssh -i $(ssh_key) $(user)@$$host_name sudo pkill -f $(binary_name); \
-	ssh -i $(ssh_key) $(user)@$$host_name touch $(remote_dir)/$(log_file); \
-	scp -i $(ssh_key) .env_prod $(user)@$$host_name:$(remote_dir)/.env; \
-	scp -i $(ssh_key) $(binary_name) $(user)@$$host_name:$(remote_dir)/; \
-	scp -r -i $(ssh_key) $(web_dir) $(user)@$$host_name:$(remote_dir)/; \
-	ssh -i $(ssh_key) $(user)@$$host_name "cd $(remote_dir) && sudo nohup ./$(binary_name) > /dev/null 2>&1 & disown"; \
-	ssh -i $(ssh_key) $(user)@$$host_name "(crontab -l 2>/dev/null; echo \"$(cron_cmd)\") | crontab -"; \
-	echo "deployment complete: $$host_name"
+	) && \
+	echo "building binary" && \
+	GOOS=$(goos) GOARCH=$(goarch) go build -o $(binary_name) $(go_file) && \
+	echo "killing old process" && \
+	ssh -o StrictHostKeyChecking=no -i $(ssh_key) $(user)@$$host_name sudo -n pkill -f $(binary_name) && \
+	echo "creating log file" && \
+	ssh -i $(ssh_key) $(user)@$$host_name touch $(remote_dir)/$(log_file) && \
+	echo "copying binary and static files" && \
+	scp -i $(ssh_key) .env_prod $(user)@$$host_name:$(remote_dir)/.env && \
+	scp -i $(ssh_key) $(binary_name) $(user)@$$host_name:$(remote_dir)/ && \
+	scp -r -i $(ssh_key) $(web_dir) $(user)@$$host_name:$(remote_dir)/ && \
+	echo "starting app" && \
+	ssh -i $(ssh_key) $(user)@$$host_name "cd $(remote_dir) && echo 'sudo -n ./$(binary_name) > /dev/null 2>&1 &' | at now" && \
+	echo "starting cron job" && \
+	ssh -i $(ssh_key) $(user)@$$host_name "(crontab -l 2>/dev/null && echo \"$(cron_cmd)\") | crontab -" && \
+	echo "deployment complete to host: $$host_name"
