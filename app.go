@@ -12,6 +12,11 @@ import (
 	_ "modernc.org/sqlite"
 )
 
+func redirect(w http.ResponseWriter, r *http.Request) {
+	redirectUrl := "https://" + r.Host + r.URL.String()
+	http.Redirect(w, r, redirectUrl, http.StatusMovedPermanently)
+}
+
 func main() {
 
 	logger.InitLogger(os.Getenv("LOG_FILE"))
@@ -37,8 +42,10 @@ func main() {
 		Handler: m,
 	}
 
-	logger.Logger.Println("starting server at address:", os.Getenv("ADDRESS"))
+	// logger.Logger.Println("starting redirect listener")
+	// go http.ListenAndServe(":80", http.HandlerFunc(redirect))
 
+	logger.Logger.Println("starting main server")
 	err = server.ListenAndServe()
 	logger.Logger.Println(err)
 }

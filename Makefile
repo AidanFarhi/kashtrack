@@ -5,6 +5,7 @@ binary_name := kashtrack
 web_dir := web
 user := ec2-user
 server_name := kashtrack-server
+host_name := kash-track.com
 s3_bucket := afarhidev-kashtrack
 db_file := expense
 goos := linux
@@ -43,28 +44,21 @@ stopserver:
 
 deploy: startserver
 	@echo "starting deployment"
-	@. ./init_secrets.sh && \
-	host_name=$$( \
-		aws ec2 describe-instances \
-		--filters "Name=tag:Name,Values=$(server_name)" \
-		--query "Reservations[*].Instances[*].PublicDnsName" \
-		--output text \
-	) && \
 	echo "building binary" && \
 	GOOS=$(goos) GOARCH=$(goarch) go build -o $(binary_name) $(go_file) && \
 	echo "killing old process" && \
-	ssh -o StrictHostKeyChecking=no -i $(ssh_key) $(user)@$$host_name sudo -n pkill -f $(binary_name) || true && \
+	ssh -o StrictHostKeyChecking=no -i $(ssh_key) $(user)@$(host_name) sudo -n pkill -f $(binary_name) || true && \
 	echo "creating log file" && \
-	ssh -i $(ssh_key) $(user)@$$host_name touch $(remote_dir)/$(log_file) && \
+	ssh -i $(ssh_key) $(user)@$(host_name) touch $(remote_dir)/$(log_file) && \
 	echo "copying binary and static files" && \
-	scp -i $(ssh_key) .env_prod $(user)@$$host_name:$(remote_dir)/.env && \
-	scp -i $(ssh_key) $(binary_name) $(user)@$$host_name:$(remote_dir)/ && \
-	scp -r -i $(ssh_key) $(web_dir) $(user)@$$host_name:$(remote_dir)/ && \
+	scp -i $(ssh_key) .env_prod $(user)@$(host_name):$(remote_dir)/.env && \
+	scp -i $(ssh_key) $(binary_name) $(user)@$(host_name):$(remote_dir)/ && \
+	scp -r -i $(ssh_key) $(web_dir) $(user)@$(host_name):$(remote_dir)/ && \
 	echo "starting app" && \
-	ssh -i $(ssh_key) $(user)@$$host_name "cd $(remote_dir) && echo 'sudo -n ./$(binary_name) > /dev/null 2>&1 &' | at now 2>/dev/null" && \
+	ssh -i $(ssh_key) $(user)@$(host_name) "cd $(remote_dir) && echo 'sudo -n ./$(binary_name) > /dev/null 2>&1 &' | at now 2>/dev/null" && \
 	echo "removing old cron jobs" && \
-	ssh -i $(ssh_key) $(user)@$$host_name crontab -r || true && \
+	ssh -i $(ssh_key) $(user)@$(host_name) crontab -r || true && \
 	echo "starting cron jobs" && \
-	ssh -i $(ssh_key) $(user)@$$host_name 'echo "$(log_cleanup_cron_cmd)" | crontab -' && \
+	ssh -i $(ssh_key) $(user)@$(host_name) 'echo "$(log_cleanup_cron_cmd)" | crontab -' && \
 	rm kashtrack && \
-	echo "deployment complete to host: $$host_name"
+	echo "deployment complete to host: $(host_name)"

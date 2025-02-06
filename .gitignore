@@ -3,3 +3,4 @@ tmp
 *.pem
 kashtrack
 init_secrets.sh
+cert
