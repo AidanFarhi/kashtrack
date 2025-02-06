@@ -13,7 +13,7 @@ remote_dir := /home/ec2-user/app
 ssh_key := ./kashtrack-key-pair.pem
 log_path := $(remote_dir)/$(log_file)
 log_cleanup_cron_cmd := */1 * * * * tail -n 5 $(log_path) > $(remote_dir)/tmp_fl && mv $(remote_dir)/tmp_fl $(log_path)
-db_backup_cron_cmd := 0 23 * * * aws s3 cp $(remote_dir)/db/$(db_file).db s3://$(s3_bucket)/db/$(db_file)_$(date +\%Y_\%m_\%d).db
+# db_backup_cron_cmd := 0 23 * * * aws s3 cp $(remote_dir)/db/$(db_file).db s3://$(s3_bucket)/db/$(db_file)_$(date +\%Y_\%m_\%d).db
 
 startserver:
 	@echo "starting server"
@@ -53,7 +53,7 @@ deploy: startserver
 	echo "building binary" && \
 	GOOS=$(goos) GOARCH=$(goarch) go build -o $(binary_name) $(go_file) && \
 	echo "killing old process" && \
-	ssh -o StrictHostKeyChecking=no -i $(ssh_key) $(user)@$$host_name sudo -n pkill -f $(binary_name) && \
+	ssh -o StrictHostKeyChecking=no -i $(ssh_key) $(user)@$$host_name sudo -n pkill -f $(binary_name) || true && \
 	echo "creating log file" && \
 	ssh -i $(ssh_key) $(user)@$$host_name touch $(remote_dir)/$(log_file) && \
 	echo "copying binary and static files" && \
@@ -62,9 +62,9 @@ deploy: startserver
 	scp -r -i $(ssh_key) $(web_dir) $(user)@$$host_name:$(remote_dir)/ && \
 	echo "starting app" && \
 	ssh -i $(ssh_key) $(user)@$$host_name "cd $(remote_dir) && echo 'sudo -n ./$(binary_name) > /dev/null 2>&1 &' | at now 2>/dev/null" && \
-	echo "removing old cron jobs"
-	ssh -i $(ssh_key) $(user)@$$host_name crontab -r && \
+	echo "removing old cron jobs" && \
+	ssh -i $(ssh_key) $(user)@$$host_name crontab -r || true && \
 	echo "starting cron jobs" && \
 	ssh -i $(ssh_key) $(user)@$$host_name 'echo "$(log_cleanup_cron_cmd)" | crontab -' && \
-	ssh -i $(ssh_key) $(user)@$$host_name 'echo "$(db_backup_cron_cmd)" | crontab -' && \
+	rm kashtrack && \
 	echo "deployment complete to host: $$host_name"
