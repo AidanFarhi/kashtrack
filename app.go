@@ -42,8 +42,8 @@ func main() {
 		Handler: m,
 	}
 
-	// logger.Logger.Println("starting redirect listener")
-	// go http.ListenAndServe(":80", http.HandlerFunc(redirect))
+	logger.Logger.Println("starting redirect listener")
+	go http.ListenAndServe(":80", http.HandlerFunc(redirect))
 
 	logger.Logger.Println("starting main server")
 	err = server.ListenAndServeTLS(
