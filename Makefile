@@ -61,4 +61,4 @@ deploy: startserver
 	echo "starting cron jobs" && \
 	ssh -i $(ssh_key) $(user)@$(host_name) 'echo "$(log_cleanup_cron_cmd)" | crontab -' && \
 	rm kashtrack && \
-	echo "deployment complete to host: $(host_name)"
+	echo "deployment complete"

@@ -46,6 +46,9 @@ func main() {
 	// go http.ListenAndServe(":80", http.HandlerFunc(redirect))
 
 	logger.Logger.Println("starting main server")
-	err = server.ListenAndServe()
+	err = server.ListenAndServeTLS(
+		os.Getenv("CERT_PATH"),
+		os.Getenv("PRIVATE_KEY_PATH"),
+	)
 	logger.Logger.Println(err)
 }
