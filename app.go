@@ -12,11 +12,6 @@ import (
 	_ "modernc.org/sqlite"
 )
 
-func redirect(w http.ResponseWriter, r *http.Request) {
-	redirectUrl := "https://" + r.Host + r.URL.String()
-	http.Redirect(w, r, redirectUrl, http.StatusMovedPermanently)
-}
-
 func main() {
 
 	logger.InitLogger(os.Getenv("LOG_FILE"))
@@ -38,17 +33,20 @@ func main() {
 	m.HandleFunc("GET /expense_distribution", handler.ExpenseDistributionHandler(db))
 
 	server := http.Server{
-		Addr:    os.Getenv("ADDRESS"),
+		Addr:    "0.0.0.0:443",
 		Handler: m,
 	}
 
 	logger.Logger.Println("starting redirect listener")
-	go http.ListenAndServe(":80", http.HandlerFunc(redirect))
+	go http.ListenAndServe("0.0.0.0:80", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		redirectUrl := "https://" + r.Host + r.URL.String()
+		http.Redirect(w, r, redirectUrl, http.StatusMovedPermanently)
+	}))
 
-	logger.Logger.Println("starting main server")
+	logger.Logger.Println("starting server")
 	err = server.ListenAndServeTLS(
 		os.Getenv("CERT_PATH"),
 		os.Getenv("PRIVATE_KEY_PATH"),
 	)
-	logger.Logger.Println(err)
+	logger.Logger.Fatal(err)
 }
