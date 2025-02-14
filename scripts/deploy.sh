@@ -24,9 +24,6 @@ scp -r -i $ssh_key web ec2-user@kash-track.com:/home/ec2-user/app/
 echo "starting app"
 ssh -i $ssh_key ec2-user@kash-track.com "cd /home/ec2-user/app && echo 'sudo -n ./kashtrack > /dev/null 2>&1 &' | at now 2>/dev/null"
 
-# ssh -i $ssh_key ec2-user@kash-track.com "cd /home/ec2-user/app && sudo ./kashtrack > /dev/null 2>&1 &"
-# ssh -i $ssh_key ec2-user@kash-track.com "cd /home/ec2-user/app && echo 'sudo -n ./$(binary_name) > /dev/null 2>&1 &' | at now 2>/dev/null"
-
 # echo "removing old cron jobs"
 # ssh -i $ssh_key ec2-user@kash-track.com crontab -r || true
 

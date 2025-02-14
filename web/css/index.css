@@ -14,10 +14,11 @@ button, input[type="submit"], input[type="reset"] {
 }
 
 body {
-    height: 100vh;
+    height: 100dvh;
     display: grid;
-    grid-template-rows: 5vh 25vh 1fr 10vh;
-    grid-template-columns: 7.5vw 1fr 3fr 1fr 7.5vw;
+    overflow-y: hidden;
+    grid-template-rows: 5dvh 25dvh 1fr 10dvh;
+    grid-template-columns: 7.5dvw 1fr 1fr 7.5dvw;
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
 }
 
@@ -29,16 +30,16 @@ table {
   }
   
 th, td {
-padding: 0;
-border: none;
-text-align: left;
+    padding: 0;
+    border: none;
+    text-align: left;
 }
 
 #fader {
     z-index: 3;
     position: absolute;
-    height: 100%;
-    width: 100%;
+    height: 100dvh;
+    width: 100dvw;
     opacity: 0.25;
     background-color: black;
 }
