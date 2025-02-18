@@ -30,8 +30,8 @@ func GetExpenses(db *sql.DB, userID int) ([]model.Expense, error) {
 func GetCurrentMonthSum(db *sql.DB, userID int) (float64, error) {
 	var currentMonthSum float64
 	row := db.QueryRow(`
-		SELECT 
-			SUM(amount) 
+		SELECT
+			ROUND(SUM(amount), 2) 
 		FROM 
 			expense
 		WHERE 
