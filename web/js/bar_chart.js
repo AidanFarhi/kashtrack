@@ -1,32 +1,40 @@
-const pieChartContext = document.getElementById('pie-chart').getContext('2d')
+const barChartContext = document.getElementById('bar-chart').getContext('2d')
 
 async function fetchChartData() {
     try {
         const response = await fetch("/expense_distribution")
         const jsonData = await response.json()
+        jsonData.sort((a, b) => b.amount - a.amount);
         const labels = jsonData.map(item => item.category)
         const data = jsonData.map(item => item.amount)
         const backgroundColors = labels.map(() => getRandomColor())
         const chartData = {
             labels: labels,
             datasets: [{
+                label: 'Expense Amount',
                 data: data,
                 backgroundColor: backgroundColors,
-                hoverOffset: 4
+                borderColor: backgroundColors.map(color => color.replace('0.75', '1')), // Full opacity for border
+                borderWidth: 1
             }]
         }
         const config = {
-            type: 'pie',
+            type: 'bar',
             data: chartData,
             options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    }
+                },
                 plugins: {
                     legend: {
-                        position: 'bottom'
+                        display: false
                     }
                 }
             }
         }
-        new Chart(pieChartContext, config)
+        new Chart(barChartContext, config)
     } catch (error) {
         console.error("Error fetching or processing data:", error)
     }
