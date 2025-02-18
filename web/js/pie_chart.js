@@ -21,7 +21,7 @@ async function fetchChartData() {
             options: {
                 plugins: {
                     legend: {
-                        position: 'left'
+                        position: 'top'
                     }
                 }
             }

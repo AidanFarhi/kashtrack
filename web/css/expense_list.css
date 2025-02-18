@@ -1,6 +1,6 @@
 #expense-table-container {
-    grid-row: 3/4;
-    grid-column: 2/5;
+    grid-row: 4/5;
+    grid-column: 2/4;
     background-color: white;
     max-height: 60vh;
     overflow: hidden;
@@ -18,6 +18,7 @@ thead {
     top: 0;
     box-shadow: 0 1px 1px -1px rgb(0, 0, 0);
     z-index: 1;
+    font-size: smaller;
 }
 
 #header-row {
@@ -37,4 +38,5 @@ td {
     color: rgba(0, 0, 0, 0.65);
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    font-size: smaller;
 }
