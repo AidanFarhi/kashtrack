@@ -28,7 +28,7 @@ func LoginHandler(db *sql.DB, t *template.Template) http.HandlerFunc {
 func LogoutHandler(db *sql.DB, t *template.Template) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		userId, _ := service.GetUserIDFromSessionToken(db, r)
-		service.Logout(db, userId)
+		service.Logout(db, userId, r)
 		http.SetCookie(w, &http.Cookie{
 			Name:     "session_token",
 			Value:    "",
